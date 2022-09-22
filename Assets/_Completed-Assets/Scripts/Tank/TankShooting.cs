@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using UnityEngine.UI;
 
 namespace Complete
@@ -68,7 +68,7 @@ namespace Complete
             else if (Input.GetButton (m_FireButton) && !m_Fired)
             {
                 // Increment the launch force and update the slider.
-                m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
+                m_CurrentLaunchForce += m_ChargeSpeed * Clock.deltaTime;
 
                 m_AimSlider.value = m_CurrentLaunchForce;
             }
@@ -101,4 +101,4 @@ namespace Complete
             m_CurrentLaunchForce = m_MinLaunchForce;
         }
     }
-}
+}*/
