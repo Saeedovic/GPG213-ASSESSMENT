@@ -12,8 +12,9 @@ public class Clock : MonoBehaviour
     public int seconds;
 
     
-    void Start()
+    void Awake()
     {
+        hour = System.DateTime.Now.Hour;
         
     }
 

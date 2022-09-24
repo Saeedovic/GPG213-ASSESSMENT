@@ -19,8 +19,8 @@ public class SecondState : AgentState
     public void MoveAgent(AgentManager manager)
     {
 
-        manager.tankTwo.transform.position = Vector3.MoveTowards(manager.tankTwo.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
-        if (manager.tankTwo.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
+        manager.tank.transform.position = Vector3.MoveTowards(manager.tank.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
+        if (manager.tank.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
         {
             if (manager.index <= manager.astarPF.finalpath.Count)
             {

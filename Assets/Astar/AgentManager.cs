@@ -6,14 +6,22 @@ public class AgentManager : MonoBehaviour
 {
     public Node node;
     public AstarPF astarPF;
+    public bool onIndex;
+
+    public float distToObject;
+    public Vector3 jumpForce;
+    public float range;
+    public Vector3 jumpHeight;
 
     public FirstState firstState = new FirstState();
     public SecondState secondState = new SecondState();
 
     public Transform targetTransform;
 
-    public GameObject tankOne;
-    public GameObject tankTwo;
+    public GameObject obstacle;
+
+    public GameObject tank;
+  //  public GameObject tankTwo;
   //  public GameObject tankThree;
     public int index;
     public Rigidbody rb;
@@ -34,6 +42,7 @@ public class AgentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distToObject = Vector3.Distance(this.transform.position, obstacle.transform.position);
         currentState.UpdateState(this);
 
     }
