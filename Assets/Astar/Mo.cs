@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Mo : MonoBehaviour
 {
+    public AstarPF astar;
+    public AgentManager agentManager;
 
     public float speed = 100f;
     public Rigidbody rb;
@@ -14,19 +16,19 @@ public class Mo : MonoBehaviour
 
     void Start()
     {
-
-        rb = this.GetComponent<Rigidbody>();
+      //  rb = this.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        Jump();
+        transform.position = Vector3.MoveTowards(transform.position, astar.finalpath[astar.finalpath.Count - 2].worldPos, speed * Time.deltaTime);
+       // Jump();
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
     }
 
     void FixedUpdate()
     {
-        Move(movement);
+       // Move(movement);
     }
 
     void Move(Vector3 direction)

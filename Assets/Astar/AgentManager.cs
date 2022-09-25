@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AgentManager : MonoBehaviour
 {
-    public Node node;
+    //public Node node;
     public AstarPF astarPF;
     public bool onIndex;
 
@@ -15,23 +15,31 @@ public class AgentManager : MonoBehaviour
 
     public FirstState firstState = new FirstState();
     public SecondState secondState = new SecondState();
+    public ThirdState thirdState = new ThirdState();
 
-    public Transform targetTransform;
+
+    //  public Transform targetTransform;
 
     public GameObject obstacle;
 
     public GameObject tank;
-  //  public GameObject tankTwo;
-  //  public GameObject tankThree;
+    public GameObject tankTwo;
+    public float speed;
+    //  public GameObject tankTwo;
+    //  public GameObject tankThree;
     public int index;
     public Rigidbody rb;
-    public float speed;
+    public Set settings;
     public Vector3Int start;
     public Vector3Int end;
     public Vector3Int start2;
     public Vector3Int end2;
+    public Vector3Int start3;
+    public Vector3Int end3;
 
-    public bool done;
+    public bool firstRun;
+    public bool secondRun;
+    public bool thirdRun;
 
     AgentState currentState;
     void Start()
