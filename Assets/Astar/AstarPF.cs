@@ -66,7 +66,7 @@ public class AstarPF : MonoBehaviour
 
             for (int i = 0; i < neighbours.Count; i++)
             {
-                if (neighbours[i].isWalkable && !neighbours[i].WasVisited)
+                if (neighbours[i].istransverable && !neighbours[i].WasVisited)
                 {
                     if (!openList.Contains(neighbours[i]))
                     {

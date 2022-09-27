@@ -35,11 +35,11 @@ public class FirstState : AgentState
             if (manager.index <= manager.astarPF.finalpath.Count)
             {
                 manager.index++;
-                /* if (manager.distToObject <= manager.range)
-                 {
+                if (manager.distToObject <= manager.range)
+                {
 
-                     Jump(manager);
-                 }*/
+                    Jump(manager);
+                }
 
             }
             /* if (manager.transform.position != manager.astarPF.finalpath[manager.astarPF.finalpath.Count - 1].worldPos)
@@ -53,6 +53,6 @@ public class FirstState : AgentState
 
     public void Jump(AgentManager manager)
     {
-        manager.rb.velocity += manager.jumpHeight;
+        manager.rb.AddForce(manager.jumpForce, ForceMode.Impulse);
     }
 }
