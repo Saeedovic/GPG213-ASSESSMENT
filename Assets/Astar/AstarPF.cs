@@ -71,7 +71,7 @@ public class AstarPF : MonoBehaviour
                     if (!openList.Contains(neighbours[i]))
                     {
 
-                        int cost = CalculateDistance(neighbours[i].GridPosition, startNode.GridPosition);/// check
+                        int cost = CalculateDistance(neighbours[i].GridPosition, startNode.GridPosition) + neighbours[i].movementPenalty;/// check
 
 
 

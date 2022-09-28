@@ -7,7 +7,9 @@ public class Node : IComparable
 {
     public int GCost;
     public int HCost;
+
     public Node parent;
+    public int movementPenalty;
     public bool istransverable { get; private set; }
     public bool WasVisited { get; set; }
 
@@ -21,12 +23,12 @@ public class Node : IComparable
 
 
 
-    public Node(Vector3 worldposition, Vector3Int gridposition, bool IsTransverable)
+    public Node(Vector3 worldposition, Vector3Int gridposition, bool IsTransverable, int MovementPenalty)
     {
         worldPos = worldposition;
         GridPosition = gridposition;
         this.istransverable = IsTransverable;
-
+        this.movementPenalty = MovementPenalty;
     }
     public int CompareTo(object obj)
     {

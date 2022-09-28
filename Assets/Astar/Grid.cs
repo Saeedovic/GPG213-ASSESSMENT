@@ -9,12 +9,14 @@ public class Grid : MonoBehaviour
     public int cellCountX;
     public int cellCountZ;
     public GameObject gameobject;
-    public bool walkable;
+    //  public bool walkable;
+    Dictionary<int, int> walkableRegionsDictionary =  new Dictionary<int, int>();
 
-    public Transform obstacles;
+    public ObjectType[] walkableRegions;
+    LayerMask walkableMask;
     public int cellSizeX;
     public int cellSizeZ;
-    Node nooode;
+  //  Node nooode;
     //   public bool IsAnObstacle = false;
     // public AstarPF Pathfinding;
 
@@ -22,6 +24,12 @@ public class Grid : MonoBehaviour
 
     void Start()
     {
+        foreach(ObjectType region in walkableRegions)
+        {
+            walkableMask.value = walkableMask |= region.layerMask.value;
+            walkableRegionsDictionary.Add((int)Mathf.Log(region.layerMask.value, 2), region.movementCost);
+            
+        }
         GridCreator(cellCountX, cellCountZ);
 
     }
@@ -38,8 +46,20 @@ public class Grid : MonoBehaviour
                 int i = x + z * cellCountX;
 
                 Vector3 worldposition = new Vector3 (x * cellSizeX + (cellSizeX / 2.0f), 0, z * cellSizeZ + (cellSizeZ / 2.0f));
-               walkable = !(Physics.CheckSphere(worldposition, nodeRadius, unWalkable));
-                nodes[x,z] = new Node(worldposition, new Vector3Int(x, 0, z), walkable);
+              bool walkable = !(Physics.CheckSphere(worldposition, nodeRadius, unWalkable));
+
+                int movementPenalty = 0;
+
+                if (walkable)
+                {
+                    Ray ray = new Ray(worldposition + Vector3.up * 50, Vector3.down);
+                    RaycastHit hit;
+                    if(Physics.Raycast(ray, out hit, 100 , walkableMask))
+                    {
+                        walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+                    }
+                }
+                nodes[x,z] = new Node(worldposition, new Vector3Int(x, 0, z), walkable, movementPenalty);
                 
 
                 /*gameobject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -101,5 +121,11 @@ public class Grid : MonoBehaviour
 
 
 
+}
+[System.Serializable]
+public class ObjectType
+{
+    public LayerMask layerMask;
+    public int movementCost;
 }
 
