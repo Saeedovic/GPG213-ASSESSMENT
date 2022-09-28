@@ -9,6 +9,7 @@ public class Grid : MonoBehaviour
     public int cellCountX;
     public int cellCountZ;
     public GameObject gameobject;
+    public bool walkable;
 
     public Transform obstacles;
     public int cellSizeX;
@@ -17,7 +18,7 @@ public class Grid : MonoBehaviour
     //   public bool IsAnObstacle = false;
     // public AstarPF Pathfinding;
 
-    Node[] nodes;
+    Node[,] nodes;
 
     void Start()
     {
@@ -28,28 +29,32 @@ public class Grid : MonoBehaviour
 
     public void GridCreator(int cellCountX, int cellCountZ)
     {
-        nodes = new Node[cellCountX * cellCountZ];
+        nodes = new Node[cellCountX , cellCountZ];
 
         for (int z = 0; z < cellCountZ; z++)
         {
             for (int x = 0; x < cellCountX; x++)
             {
                 int i = x + z * cellCountX;
-                nodes[i] = new Node(new Vector3(x * cellSizeX + (cellSizeX / 2.0f), 0, z * cellSizeZ + (cellSizeZ / 2.0f)), new Vector3Int(x, 0, z), true);
 
-                gameobject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                Vector3 worldposition = new Vector3 (x * cellSizeX + (cellSizeX / 2.0f), 0, z * cellSizeZ + (cellSizeZ / 2.0f));
+               walkable = !(Physics.CheckSphere(worldposition, nodeRadius, unWalkable));
+                nodes[x,z] = new Node(worldposition, new Vector3Int(x, 0, z), walkable);
+                
+
+                /*gameobject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 gameobject.transform.position = nodes[i].worldPos;
-                gameobject.transform.localScale = new Vector3(cellSizeX, 0, cellSizeZ) / 3f;
-                gameobject.GetComponent<Collider>().enabled = false;
-
+                gameobject.transform.localScale = new Vector3(cellSizeX, 0, cellSizeZ) / 3f;*/
+              //  gameobject.GetComponent<Collider>().enabled = false;
+                
                 /* Collider[] hitcolliders = Physics.OverlapSphere(gameObject.transform.position, nodeRadius);
                  if(hitcolliders == GameObject.FindGameObjectsWithTag("Obstacle"))
                  {
 
                  }*/
-              /*  bool walkable = !(Physics.CheckSphere(nodes[i].worldPos, nodeRadius, unWalkable));
-                nodes[x * z] = new Node(new Vector3(x * cellSizeX + (cellSizeX / 2.0f), 0, z * cellSizeZ + (cellSizeZ / 2.0f)), new Vector3Int(x, 0, z), true);
-*/
+                /*  bool walkable = !(Physics.CheckSphere(nodes[i].worldPos, nodeRadius, unWalkable));
+                  nodes[x * z] = new Node(new Vector3(x * cellSizeX + (cellSizeX / 2.0f), 0, z * cellSizeZ + (cellSizeZ / 2.0f)), new Vector3Int(x, 0, z), true);
+  */
 
             }
         }
@@ -74,7 +79,7 @@ public class Grid : MonoBehaviour
     public Node GetNode(Vector3Int gridPosition)
     {
         int i = gridPosition.x + gridPosition.z * cellCountX;
-        return nodes[i];
+        return nodes[gridPosition.x,gridPosition.z];
     }
 
     private void OnDrawGizmos()

@@ -50,7 +50,7 @@ Shader "Unlit/Shader1"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.diffuse=diffuse;
+                o.diffuse = diffuse;
                 return o;
             } 
 
