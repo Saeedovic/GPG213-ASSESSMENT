@@ -14,8 +14,8 @@ Shader "Unlit/Shader1"
                 
                 }
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members diffuse)
-#pragma exclude_renderers d3d11
+
+            #pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
            
@@ -68,4 +68,5 @@ Shader "Unlit/Shader1"
             ENDCG
         }
     }
+    FallBack "Diffuse"
 }

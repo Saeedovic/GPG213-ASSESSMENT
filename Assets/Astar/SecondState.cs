@@ -31,6 +31,12 @@ public class SecondState : AgentState
             if (manager.index <= manager.astarPF.finalpath.Count)
             {
                 manager.index++;
+                if (manager.distToObject <= 2)
+                {
+                    manager.jumped = true;
+                    Debug.Log("Jump");
+
+                }
             }
 
         }

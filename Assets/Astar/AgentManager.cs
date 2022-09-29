@@ -7,11 +7,12 @@ public class AgentManager : MonoBehaviour
     //public Node node;
     public AstarPF astarPF;
     public bool onIndex;
+    public bool jumped;
 
     public float distToObject;
     public Vector3 jumpForce;
     public float range;
-    public Vector3 jumpHeight;
+    public float jumpHeight;
 
     public FirstState firstState = new FirstState();
     public SecondState secondState = new SecondState();
@@ -24,6 +25,7 @@ public class AgentManager : MonoBehaviour
 
     public GameObject tank;
     public GameObject tankTwo;
+    public GameObject jump;
     public float speed;
     //  public GameObject tankTwo;
     //  public GameObject tankThree;
@@ -50,7 +52,8 @@ public class AgentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distToObject = Vector3.Distance(this.transform.position, obstacle.transform.position);
+        distToObject = Vector3.Distance(this.transform.position, jump.transform.position);
+       
         currentState.UpdateState(this);
 
     }
@@ -59,4 +62,26 @@ public class AgentManager : MonoBehaviour
     {
         currentState = agentState;
     }
+
+
+   /* private void OnCollisionEnter(Collision collision)
+    {
+        if (distToObject 
+        {
+            jumped = true;
+
+        }
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Jump"))
+        {
+
+            jumped = false;
+
+        }
+    }
+*/
 }
