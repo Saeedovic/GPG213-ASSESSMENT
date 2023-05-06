@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class AstarPF : MonoBehaviour
 {
@@ -21,6 +22,24 @@ public class AstarPF : MonoBehaviour
         closeList = new List<Node>(100);
         finalpath = new List<Node>(100);
 
+        Thread pathfindingThread = new Thread(new ThreadStart(FindPath));
+        pathfindingThread.Start();
+
+    }
+
+    private void FindPath()
+    {
+        while (true)
+        {
+            // Wait for start and end nodes to be set
+            while (startNode == null || endNode == null)
+            {
+                Thread.Sleep(100);
+            }
+
+            // Find path
+            PathFinder(startNode.GridPosition, endNode.GridPosition);
+        }
     }
 
 
