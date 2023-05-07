@@ -15,6 +15,11 @@ public class AstarPF : MonoBehaviour
     public Node startNode;
     public Node endNode;
 
+    Thread pathfindingThread;
+    //bool validPathFound;
+    public bool pathAvailable { get; protected set; }
+
+
     private void Start()
     {
         neighbours = new List<Node>();
@@ -22,29 +27,45 @@ public class AstarPF : MonoBehaviour
         closeList = new List<Node>(100);
         finalpath = new List<Node>(100);
 
-        Thread pathfindingThread = new Thread(new ThreadStart(FindPath));
-        pathfindingThread.Start();
+        pathAvailable = false;
 
+        //pathfindingThread.Start();
     }
 
+
+    // figure out a valid path for agents to use.
     private void FindPath()
     {
-        while (true)
+        //while (true)
         {
-            // Wait for start and end nodes to be set
-            while (startNode == null || endNode == null)
+
+            //while (startNode == null || endNode == null)
             {
-                Thread.Sleep(100);
+                // Thread.Sleep(100);
             }
 
             // Find path
             PathFinder(startNode.GridPosition, endNode.GridPosition);
+
+            // make sure thread's done and returned true
+            //if(!pathfindingThread.IsAlive && validPathFound)
+            {
+
+            }
         }
     }
 
 
-    public bool PathFinder(Vector3Int startNodeGrid, Vector3Int endNodeGrid)
+    public void PathFinder(Vector3Int startNodeGrid, Vector3Int endNodeGrid)
     {
+        if (pathfindingThread.IsAlive)
+        {
+            Debug.LogWarning("A* path is already being searched!");
+
+            return; // exit if the thread is already active, so we don't do unwanted stuff to variables.
+        }
+
+        pathAvailable = false;
         openList.Clear();
 
         for (int i = 0; i < closeList.Count; i++)
@@ -52,6 +73,7 @@ public class AstarPF : MonoBehaviour
             closeList[i].parent = null;
             closeList[i].WasVisited = false;
         }
+
         closeList.Clear();
         neighbours.Clear();
         finalpath.Clear();
@@ -63,6 +85,14 @@ public class AstarPF : MonoBehaviour
         openList.Add(currentNode);
 
 
+        pathfindingThread = new Thread(new ThreadStart(CalculateSmallestCost));
+        pathfindingThread.Start();
+
+    }
+
+
+    void CalculateSmallestCost()
+    {
         while (openList.Count > 0)
         {
 
@@ -78,7 +108,7 @@ public class AstarPF : MonoBehaviour
                 GetPath(endNode);
                 finalpath.Reverse();
 
-                return true;
+                pathAvailable = true;
             }
 
             CheckNeighbours(currentNode);
@@ -112,8 +142,12 @@ public class AstarPF : MonoBehaviour
 
             }
         }
-        return false;
+
+        pathAvailable = false;
+
     }
+
+
     public void CheckNeighbours(Node currentNode)
     {
         neighbours.Clear();
@@ -176,8 +210,6 @@ public class AstarPF : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-
-
         Gizmos.color = Color.red;
         for (int i = 0; i < finalpath.Count; i++)
         {

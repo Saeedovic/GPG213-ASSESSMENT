@@ -19,53 +19,59 @@ public class ThirdState : AgentState
             MoveTankTwo(manager);
         }
 
-            /*if (manager.tank.transform.position == manager.astarPF.finalpath[manager.astarPF.finalpath.Count - 1].worldPos)
-            {
-                manager.thirdRun = true;
-                manager.astarPF.PathFinder(manager.start3, manager.end3);
-                MoveTankTwo(manager);
+        /*if (manager.tank.transform.position == manager.astarPF.finalpath[manager.astarPF.finalpath.Count - 1].worldPos)
+        {
+            manager.thirdRun = true;
+            manager.astarPF.PathFinder(manager.start3, manager.end3);
+            MoveTankTwo(manager);
 
 
-            }*/
+        }*/
 
     }
     public void MoveTank(AgentManager manager)
     {
-
-
-        manager.tank.transform.position = Vector3.MoveTowards(manager.tank.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
-        if (manager.tank.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
+        if (manager.astarPF.pathAvailable)
         {
-            if (manager.index <= manager.astarPF.finalpath.Count)
+
+            manager.tank.transform.position = Vector3.MoveTowards(manager.tank.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
+            if (manager.tank.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
             {
-                manager.index++;
-                if (manager.distToObject <= 2)
+                if (manager.index <= manager.astarPF.finalpath.Count)
                 {
-                    manager.jumped = true;
-                    Debug.Log("Jump");
+                    manager.index++;
+                    if (manager.distToObject <= 2)
+                    {
+                        manager.jumped = true;
+                        Debug.Log("Jump");
 
+                    }
                 }
-            }
 
+            }
         }
+
     }
 
     public void MoveTankTwo(AgentManager manager)
     {
-        manager.tankTwo.transform.position = Vector3.MoveTowards(manager.tankTwo.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
-        if (manager.tankTwo.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
+        if (manager.astarPF.pathAvailable)
         {
-            if (manager.index <= manager.astarPF.finalpath.Count)
+            manager.tankTwo.transform.position = Vector3.MoveTowards(manager.tankTwo.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
+            if (manager.tankTwo.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
             {
-                manager.index++;
-                if (manager.distToObject <= 2)
+                if (manager.index <= manager.astarPF.finalpath.Count)
                 {
-                    manager.jumped = true;
-                    Debug.Log("Jump");
+                    manager.index++;
+                    if (manager.distToObject <= 2)
+                    {
+                        manager.jumped = true;
+                        Debug.Log("Jump");
 
+                    }
                 }
-            }
 
+            }
         }
 
 

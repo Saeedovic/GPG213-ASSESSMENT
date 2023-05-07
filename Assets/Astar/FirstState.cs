@@ -28,38 +28,40 @@ public class FirstState : AgentState
 
     public void MoveAgent(AgentManager manager)
     {
-
-        manager.tank.transform.position = Vector3.MoveTowards(manager.tank.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
-        if (manager.tank.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
+        if (manager.astarPF.pathAvailable)
         {
-            if (manager.index <= manager.astarPF.finalpath.Count)
+            manager.tank.transform.position = Vector3.MoveTowards(manager.tank.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
+            if (manager.tank.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
             {
-                manager.index++;
-                if (manager.distToObject <= 2)
+                if (manager.index <= manager.astarPF.finalpath.Count)
                 {
-                    manager.jumped = true;
-                    Debug.Log("Jump");
+                    manager.index++;
+                    if (manager.distToObject <= 2)
+                    {
+                        manager.jumped = true;
+                        Debug.Log("Jump");
+
+                    }
+                    /* if (manager.distToObject <= manager.range)
+                     {
+
+                         Jump(manager);
+                     }*/
 
                 }
-                /* if (manager.distToObject <= manager.range)
+                /* if (manager.transform.position != manager.astarPF.finalpath[manager.astarPF.finalpath.Count - 1].worldPos)
                  {
 
-                     Jump(manager);
+                     manager.transform.position = Vector3.MoveTowards(manager.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
                  }*/
 
             }
-            /* if (manager.transform.position != manager.astarPF.finalpath[manager.astarPF.finalpath.Count - 1].worldPos)
-             {
-
-                 manager.transform.position = Vector3.MoveTowards(manager.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
-             }*/
-
         }
     }
 }
 
-    /*public void Jump(AgentManager manager)
-    {
-        manager.rb.AddForce(manager.jumpForce, ForceMode.Impulse);
-    }
+/*public void Jump(AgentManager manager)
+{
+    manager.rb.AddForce(manager.jumpForce, ForceMode.Impulse);
+}
 }*/

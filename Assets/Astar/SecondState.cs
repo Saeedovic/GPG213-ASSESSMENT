@@ -18,27 +18,29 @@ public class SecondState : AgentState
         {
             manager.secondRun = true;
             manager.index = 0;
-            
+
             manager.SwitchState(manager.thirdState);
         }
     }
     public void MoveAgent(AgentManager manager)
     {
-
-        manager.tankTwo.transform.position = Vector3.MoveTowards(manager.tankTwo.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
-        if (manager.tankTwo.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
+        if (manager.astarPF.pathAvailable)
         {
-            if (manager.index <= manager.astarPF.finalpath.Count)
+            manager.tankTwo.transform.position = Vector3.MoveTowards(manager.tankTwo.transform.position, manager.astarPF.finalpath[manager.index].worldPos, manager.speed * Time.deltaTime);
+            if (manager.tankTwo.transform.position == manager.astarPF.finalpath[manager.index].worldPos)
             {
-                manager.index++;
-                if (manager.distToObject <= 2)
+                if (manager.index <= manager.astarPF.finalpath.Count)
                 {
-                    manager.jumped = true;
-                    Debug.Log("Jump");
+                    manager.index++;
+                    if (manager.distToObject <= 2)
+                    {
+                        manager.jumped = true;
+                        Debug.Log("Jump");
 
+                    }
                 }
-            }
 
+            }
         }
     }
 
